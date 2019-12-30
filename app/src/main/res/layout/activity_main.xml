@@ -20,11 +20,8 @@
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/today"/>
-	<TextView
-		android:id="@+id/noteTV"
-		android:layout_height="wrap_content"
+	<ScrollView
+		android:id="@+id/notesSV"
 		android:layout_width="match_parent"
-		android:text="@string/noNotes"
-		android:textColor="@color/text"
-		android:textSize="25sp"/>
+		android:layout_height="match_parent"/>
 </LinearLayout>
