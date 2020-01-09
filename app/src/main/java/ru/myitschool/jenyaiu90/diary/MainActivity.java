@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,14 +22,14 @@ import java.util.Formatter;
 public class MainActivity extends AppCompatActivity
 {
 	private TextView todayTV;
-	private ScrollView notesSV;
+	private LinearLayout notesLL;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		todayTV = (TextView)findViewById(R.id.todayTV);
-		notesSV = (ScrollView)findViewById(R.id.notesSV);
+		notesLL = (LinearLayout)findViewById(R.id.notesLL);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		String date = dateFormat.format(new Date());
 		todayTV.setText(((new Formatter()).format(getResources().getText(R.string.todayNotes).toString(),
@@ -35,7 +38,6 @@ public class MainActivity extends AppCompatActivity
 		{
 			BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(
 				"notes\\" + date + "\\notes.txt")));
-			int index = 0;
 			for (String i; (i = br.readLine()) != null; )
 			{
 				try
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity
 					BufferedReader note = new BufferedReader(new InputStreamReader(openFileInput(
 						"notes\\" + date + "\\" + i + ".txt")));
 					Button noteBT = new Button(MainActivity.this);
-					notesSV.addView(noteBT, index++);
+					notesLL.addView(noteBT);
 					noteBT.setTextSize(15);
 					String buff, t = "";
 					int j = 0;
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity
 		catch (FileNotFoundException e)
 		{
 			TextView noNoteTV = new TextView(MainActivity.this);
-			notesSV.addView(noNoteTV, 0);
+			notesLL.addView(noNoteTV, 0);
 			noNoteTV.setText(R.string.noNotes);
 			noNoteTV.setTextColor(getResources().getColor(R.color.text));
 			noNoteTV.setTextSize(20);

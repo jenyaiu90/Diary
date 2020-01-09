@@ -17,7 +17,7 @@ import java.util.Date;
 
 public class ScheduleViewActivity extends AppCompatActivity
 {
-	private ScrollView scheduleSV;
+	private LinearLayout scheduleLL;
 	private Button currentB;
 	private Date date;
 	private void setDate(Date newDate)
@@ -37,12 +37,11 @@ public class ScheduleViewActivity extends AppCompatActivity
 			tmp.setTime(date.getTime() + 518400000);
 			currentB.setText(sdf.format(date) + "—" + sdf.format(tmp));
 		}
-		scheduleSV.removeAllViews();
-		int index = 0;
+		scheduleLL.removeAllViews();
 		for (int i = 0; i < 7; i++)
 		{
 			Button dayB = new Button(ScheduleViewActivity.this);
-			scheduleSV.addView(dayB, index++);
+			scheduleLL.addView(dayB);
 			dayB.setText(getResources().getStringArray(R.array.days)[i].toString() + " " +
 				(new SimpleDateFormat("dd.MM.yyyy")).format(date));
 			try
@@ -65,7 +64,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 					nameLL.addView(timeTV, 1);
 					lessonLL.addView(nameLL, 0);
 					lessonLL.addView(taskTV, 1);
-					scheduleSV.addView(lessonLL, index++);
+					scheduleLL.addView(lessonLL);
 					nameTV.setTextColor(getResources().getColor(R.color.text));
 					lessonLL.setOnClickListener(new View.OnClickListener()
 					{
@@ -108,7 +107,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 				TextView noSchTV = new TextView(ScheduleViewActivity.this);
 				try
 				{
-					scheduleSV.addView(noSchTV, index++);
+					scheduleLL.addView(noSchTV);
 				}
 				catch (Exception ex)
 				{
@@ -128,7 +127,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule_view);
-		scheduleSV = (ScrollView)findViewById(R.id.scheduleSV);
+		scheduleLL = (LinearLayout)findViewById(R.id.scheduleLL);
 		currentB = (Button)findViewById(R.id.currentB);
 		date = new Date();
 		draw();
