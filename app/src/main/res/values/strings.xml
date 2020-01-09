@@ -13,14 +13,25 @@
 	<string name="noSchedule">There is no schedule for this day.</string>
 	<string name="noTask">There is no homework.</string>
 	
+	<!-- ScheduleEdit -->
+	<string name="add">Add new</string>
+	
 	<!-- general -->
+	<!-- ToDo: (Maybe) Remove aliases -->
+	<string name="monday">Monday</string>
+	<string name="tuesday">Tuesday</string>
+	<string name="wednesday">Wednesday</string>
+	<string name="thursday">Thursday</string>
+	<string name="friday">Friday</string>
+	<string name="saturday">Saturday</string>
+	<string name="sunday">Sunday</string>
 	<string-array name="days">
-		<item>Monday</item>
-		<item>Tuesday</item>
-		<item>Wednesday</item>
-		<item>Thursday</item>
-		<item>Friday</item>
-		<item>Saturday</item>
-		<item>Sunday</item>
+		<item>@string/monday</item>
+		<item>@string/tuesday</item>
+		<item>@string/wednesday</item>
+		<item>@string/thursday</item>
+		<item>@string/friday</item>
+		<item>@string/saturday</item>
+		<item>@string/sunday</item>
 	</string-array>
 </resources>

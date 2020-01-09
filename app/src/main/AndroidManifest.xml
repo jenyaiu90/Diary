@@ -17,6 +17,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".ScheduleViewActivity"/>
+		<activity android:name=".ScheduleEditActivity"/>
 	</application>
 
 </manifest>

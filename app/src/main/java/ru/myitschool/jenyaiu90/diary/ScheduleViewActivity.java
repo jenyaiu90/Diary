@@ -1,12 +1,12 @@
 package ru.myitschool.jenyaiu90.diary;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,7 +57,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 				}
 			});
 			tmpDate.setTime(tmpDate.getTime() + 86400000);
-			if (tmpDate.getTime() / 86400000 == (new Date()).getTime() / 86400000)
+			if (tmpDate.getTime() / 86400000 == (new Date()).getTime() / 86400000 + 1)
 			{
 				dayB.setBackgroundColor(getResources().getColor(R.color.today));
 			}
@@ -88,7 +88,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 						@Override
 						public void onClick(View v)
 						{
-							//ToDo: Call LessonActivity
+							//ToDo: Call LessonViewActivity
 						}
 					});
 					nameTV.setText(str.split(";")[0]);
@@ -144,7 +144,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule_view);
-		scheduleLL = (LinearLayout)findViewById(R.id.scheduleLL);
+		scheduleLL = (LinearLayout)findViewById(R.id.scheduleEditLL);
 		currentB = (Button)findViewById(R.id.currentB);
 		date = new Date();
 		setDate((new Date()).getTime());
@@ -183,6 +183,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 	}
 	public void editClick(View view)
 	{
-		//ToDo: Call ScheduleEditActivity
+		Intent scheduleEditA = new Intent(ScheduleViewActivity.this, ScheduleEditActivity.class);
+		startActivity(scheduleEditA);
 	}
 }
