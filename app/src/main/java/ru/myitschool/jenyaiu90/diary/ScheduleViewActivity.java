@@ -1,8 +1,10 @@
 package ru.myitschool.jenyaiu90.diary;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -151,14 +153,33 @@ public class ScheduleViewActivity extends AppCompatActivity
 	public void prevClick(View view)
 	{
 		setDate(date.getTime() - 86400000);
+		draw();
 	}
 	public void currentClick(View view)
 	{
-		//ToDo: Call SelectDateActivity
+		SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
+		SimpleDateFormat sdfMonth = new SimpleDateFormat("M");
+		SimpleDateFormat sdfDay = new SimpleDateFormat("d");
+		new DatePickerDialog(
+			ScheduleViewActivity.this,
+			new DatePickerDialog.OnDateSetListener()
+			{
+				@Override
+				public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
+				{
+					Date tmp = new Date(year - 1900, month, dayOfMonth);
+					setDate(tmp.getTime());
+					draw();
+				}
+			},
+			Integer.parseInt(sdfYear.format(date)),
+			Integer.parseInt(sdfMonth.format(date)) - 1,
+			Integer.parseInt(sdfDay.format(date))).show();
 	}
 	public void nextClick(View view)
 	{
 		setDate(date.getTime() + 604800000);
+		draw();
 	}
 	public void editClick(View view)
 	{
