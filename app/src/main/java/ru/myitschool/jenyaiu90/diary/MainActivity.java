@@ -2,6 +2,7 @@ package ru.myitschool.jenyaiu90.diary;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,14 +10,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -31,12 +29,13 @@ public class MainActivity extends AppCompatActivity
 		notesSV = (ScrollView)findViewById(R.id.notesSV);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		String date = dateFormat.format(new Date());
-		todayTV.setText(((new Formatter()).format(getResources().getText(R.string.today).toString(),
+		todayTV.setText(((new Formatter()).format(getResources().getText(R.string.todayNotes).toString(),
 				date)).toString());
 		try
 		{
 			BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(
 				"notes\\" + date + "\\notes.txt")));
+			int index = 0;
 			for (String i; (i = br.readLine()) != null; )
 			{
 				try
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity
 					BufferedReader note = new BufferedReader(new InputStreamReader(openFileInput(
 						"notes\\" + date + "\\" + i + ".txt")));
 					Button noteBT = new Button(MainActivity.this);
-					notesSV.addView(noteBT);
+					notesSV.addView(noteBT, index++);
 					noteBT.setTextSize(15);
 					String buff, t = "";
 					int j = 0;
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity
 						@Override
 						public void onClick(View v)
 						{
-							//Start NoteViewActivity
+							//Call NoteViewActivity
 						}
 					});
 				}
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity
 		catch (FileNotFoundException e)
 		{
 			TextView noNoteTV = new TextView(MainActivity.this);
-			notesSV.addView(noNoteTV);
+			notesSV.addView(noNoteTV, 0);
 			noNoteTV.setText(R.string.noNotes);
 			noNoteTV.setTextColor(getResources().getColor(R.color.text));
 			noNoteTV.setTextSize(20);
@@ -95,10 +94,11 @@ public class MainActivity extends AppCompatActivity
 	}
 	public void scheduleClick(View view)
 	{
-		//Start ScheduleViewActivity
+		Intent scheduleViewA = new Intent(MainActivity.this, ScheduleViewActivity.class);
+		startActivity(scheduleViewA);
 	}
 	public void notesClick(View view)
 	{
-		//Start NotesActivity
+		//Call NotesActivity
 	}
 }

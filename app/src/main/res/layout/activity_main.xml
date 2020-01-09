@@ -19,7 +19,7 @@
 		android:id="@+id/todayTV"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
-		android:text="@string/today"/>
+		android:text="@string/todayNotes"/>
 	<ScrollView
 		android:id="@+id/notesSV"
 		android:layout_width="match_parent"
