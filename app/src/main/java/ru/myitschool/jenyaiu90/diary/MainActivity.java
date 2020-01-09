@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity
 						@Override
 						public void onClick(View v)
 						{
-							//Call NoteViewActivity
+							//ToDo: Call NoteViewActivity
 						}
 					});
 				}
@@ -101,6 +101,6 @@ public class MainActivity extends AppCompatActivity
 	}
 	public void notesClick(View view)
 	{
-		//Call NotesActivity
+		//ToDo: Call NotesActivity
 	}
 }

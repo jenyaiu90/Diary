@@ -20,9 +20,9 @@ public class ScheduleViewActivity extends AppCompatActivity
 	private LinearLayout scheduleLL;
 	private Button currentB;
 	private Date date;
-	private void setDate(Date newDate)
+	private void setDate(long newDate)
 	{
-		date = newDate;
+		date.setTime(newDate);
 		SimpleDateFormat sdf = new SimpleDateFormat("u");
 		while (!sdf.format(date).equals("1"))
 		{
@@ -38,12 +38,27 @@ public class ScheduleViewActivity extends AppCompatActivity
 			currentB.setText(sdf.format(date) + "—" + sdf.format(tmp));
 		}
 		scheduleLL.removeAllViews();
+		Date tmpDate = new Date();
+		tmpDate.setTime(date.getTime());
 		for (int i = 0; i < 7; i++)
 		{
 			Button dayB = new Button(ScheduleViewActivity.this);
 			scheduleLL.addView(dayB);
 			dayB.setText(getResources().getStringArray(R.array.days)[i].toString() + " " +
-				(new SimpleDateFormat("dd.MM.yyyy")).format(date));
+				(new SimpleDateFormat("dd.MM.yyyy")).format(tmpDate));
+			dayB.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					//ToDo: Call DayScheduleViewActivity
+				}
+			});
+			tmpDate.setTime(tmpDate.getTime() + 86400000);
+			if (tmpDate.getTime() / 86400000 == (new Date()).getTime() / 86400000)
+			{
+				dayB.setBackgroundColor(getResources().getColor(R.color.today));
+			}
 			try
 			{
 				BufferedReader schReader = new BufferedReader(new InputStreamReader(openFileInput(
@@ -71,7 +86,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 						@Override
 						public void onClick(View v)
 						{
-							//Call LessonActivity
+							//ToDo: Call LessonActivity
 						}
 					});
 					nameTV.setText(str.split(";")[0]);
@@ -130,6 +145,23 @@ public class ScheduleViewActivity extends AppCompatActivity
 		scheduleLL = (LinearLayout)findViewById(R.id.scheduleLL);
 		currentB = (Button)findViewById(R.id.currentB);
 		date = new Date();
+		setDate((new Date()).getTime());
 		draw();
+	}
+	public void prevClick(View view)
+	{
+		setDate(date.getTime() - 86400000);
+	}
+	public void currentClick(View view)
+	{
+		//ToDo: Call SelectDateActivity
+	}
+	public void nextClick(View view)
+	{
+		setDate(date.getTime() + 604800000);
+	}
+	public void editClick(View view)
+	{
+		//ToDo: Call ScheduleEditActivity
 	}
 }

@@ -11,24 +11,28 @@
 			android:layout_height="match_parent"
 			android:layout_width="50sp"
 			android:text="@string/prev"
-			android:textSize="20sp"/>
+			android:textSize="20sp"
+			android:onClick="prevClick"/>
 		<Button
 			android:id="@+id/currentB"
 			android:layout_height="match_parent"
 			android:layout_width="0dp"
-			android:layout_weight="1"/>
+			android:layout_weight="1"
+			android:onClick="currentClick"/>
 		<Button
 			android:id="@+id/nextB"
 			android:layout_height="match_parent"
 			android:layout_width="50sp"
 			android:text="@string/next"
-			android:textSize="20sp"/>
+			android:textSize="20sp"
+			android:onClick="nextClick"/>
 	</LinearLayout>
 	<Button
 		android:id="@+id/editB"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
-		android:text="@string/editSchedule"/>
+		android:text="@string/editSchedule"
+		android:onClick="editClick"/>
 	<ScrollView
 		android:layout_height="match_parent"
 		android:layout_width="match_parent">

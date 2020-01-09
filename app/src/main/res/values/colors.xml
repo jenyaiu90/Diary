@@ -5,4 +5,5 @@
 	<color name="colorAccent">#D81B60</color>
 	
 	<color name="text">#000000</color>
+	<color name="today">#EE3333</color>
 </resources>
