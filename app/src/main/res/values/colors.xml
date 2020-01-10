@@ -6,4 +6,5 @@
 	
 	<color name="text">#000000</color>
 	<color name="today">#EE3333</color>
+	<color name="lesson">#CCCCCC</color>
 </resources>

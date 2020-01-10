@@ -42,12 +42,13 @@ public class ScheduleViewActivity extends AppCompatActivity
 		scheduleLL.removeAllViews();
 		Date tmpDate = new Date();
 		tmpDate.setTime(date.getTime());
+		String today = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
 		for (int i = 0; i < 7; i++)
 		{
+			String tmpDateS = (new SimpleDateFormat("dd.MM.yyyy")).format(tmpDate);
 			Button dayB = new Button(ScheduleViewActivity.this);
 			scheduleLL.addView(dayB);
-			dayB.setText(getResources().getStringArray(R.array.days)[i].toString() + " " +
-				(new SimpleDateFormat("dd.MM.yyyy")).format(tmpDate));
+			dayB.setText(getResources().getStringArray(R.array.days)[i].toString() + " " + tmpDateS);
 			dayB.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
@@ -56,11 +57,11 @@ public class ScheduleViewActivity extends AppCompatActivity
 					//ToDo: Call DayScheduleViewActivity
 				}
 			});
-			tmpDate.setTime(tmpDate.getTime() + 86400000);
-			if (tmpDate.getTime() / 86400000 == (new Date()).getTime() / 86400000 + 1)
+			if (tmpDateS.equals(today))
 			{
 				dayB.setBackgroundColor(getResources().getColor(R.color.today));
 			}
+			tmpDate.setTime(tmpDate.getTime() + 86400000);
 			try
 			{
 				BufferedReader schReader = new BufferedReader(new InputStreamReader(openFileInput(
@@ -147,7 +148,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 		scheduleLL = (LinearLayout)findViewById(R.id.scheduleEditLL);
 		currentB = (Button)findViewById(R.id.currentB);
 		date = new Date();
-		setDate((new Date()).getTime());
+		setDate((new Date()).getTime() / 86400000 * 86400000);
 		draw();
 	}
 	public void prevClick(View view)
