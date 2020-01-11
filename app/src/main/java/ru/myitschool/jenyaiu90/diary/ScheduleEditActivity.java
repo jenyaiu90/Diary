@@ -40,11 +40,9 @@ public class ScheduleEditActivity extends AppCompatActivity
 					nameLL.setOrientation(LinearLayout.HORIZONTAL);
 					TextView nameTV = new TextView(ScheduleEditActivity.this);
 					TextView timeTV = new TextView(ScheduleEditActivity.this);
-					TextView taskTV = new TextView(ScheduleEditActivity.this);
-					nameLL.addView(nameTV, 0);
-					nameLL.addView(timeTV, 1);
-					lessonLL.addView(nameLL, 0);
-					lessonLL.addView(taskTV, 1);
+					nameLL.addView(nameTV);
+					nameLL.addView(timeTV);
+					lessonLL.addView(nameLL);
 					scheduleEditLL.addView(lessonLL);
 					lessonLL.setBackgroundColor(getResources().getColor(R.color.lesson));
 					nameTV.setTextColor(getResources().getColor(R.color.text));

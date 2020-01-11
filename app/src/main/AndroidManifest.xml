@@ -18,6 +18,7 @@
 		</activity>
 		<activity android:name=".ScheduleViewActivity"/>
 		<activity android:name=".ScheduleEditActivity"/>
+		<activity android:name=".DayScheduleViewActivity"/>
 	</application>
 
 </manifest>

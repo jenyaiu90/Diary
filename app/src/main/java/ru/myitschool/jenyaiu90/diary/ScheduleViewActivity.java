@@ -1,6 +1,7 @@
 package ru.myitschool.jenyaiu90.diary;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,7 +23,8 @@ public class ScheduleViewActivity extends AppCompatActivity
 {
 	private LinearLayout scheduleLL;
 	private Button currentB;
-	private Date date;
+	private Date date, tmpDate;
+	private Button crutchButtons[];
 	private void setDate(long newDate)
 	{
 		date.setTime(newDate);
@@ -40,26 +43,40 @@ public class ScheduleViewActivity extends AppCompatActivity
 			currentB.setText(sdf.format(date) + "—" + sdf.format(tmp));
 		}
 		scheduleLL.removeAllViews();
-		Date tmpDate = new Date();
+		tmpDate = new Date();
 		tmpDate.setTime(date.getTime());
 		String today = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
+		crutchButtons = new Button[7];
 		for (int i = 0; i < 7; i++)
 		{
 			String tmpDateS = (new SimpleDateFormat("dd.MM.yyyy")).format(tmpDate);
-			Button dayB = new Button(ScheduleViewActivity.this);
-			scheduleLL.addView(dayB);
-			dayB.setText(getResources().getStringArray(R.array.days)[i].toString() + " " + tmpDateS);
-			dayB.setOnClickListener(new View.OnClickListener()
+			crutchButtons[i] = new Button(ScheduleViewActivity.this);
+			scheduleLL.addView(crutchButtons[i]);
+			crutchButtons[i].setText(getResources().getStringArray(R.array.days)[i].toString() + " " + tmpDateS);
+			crutchButtons[i].setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					//ToDo: Call DayScheduleViewActivity
+					Intent dayScheduleViewA = new Intent(ScheduleViewActivity.this,
+							DayScheduleViewActivity.class);
+					Date tmp = new Date();
+					tmp.setTime(tmpDate.getTime());
+					for (int i = 6; i >= 0; i--)
+					{
+						tmp.setTime(tmp.getTime() - 86400000);
+						if (crutchButtons[i] == v)
+						{
+							break;
+						}
+					}
+					dayScheduleViewA.putExtra("day", tmp);
+					startActivity(dayScheduleViewA);
 				}
 			});
 			if (tmpDateS.equals(today))
 			{
-				dayB.setBackgroundColor(getResources().getColor(R.color.today));
+				crutchButtons[i].setBackgroundColor(getResources().getColor(R.color.today));
 			}
 			tmpDate.setTime(tmpDate.getTime() + 86400000);
 			try
@@ -78,10 +95,10 @@ public class ScheduleViewActivity extends AppCompatActivity
 					TextView nameTV = new TextView(ScheduleViewActivity.this);
 					TextView timeTV = new TextView(ScheduleViewActivity.this);
 					TextView taskTV = new TextView(ScheduleViewActivity.this);
-					nameLL.addView(nameTV, 0);
-					nameLL.addView(timeTV, 1);
-					lessonLL.addView(nameLL, 0);
-					lessonLL.addView(taskTV, 1);
+					nameLL.addView(nameTV);
+					nameLL.addView(timeTV);
+					lessonLL.addView(nameLL);
+					lessonLL.addView(taskTV);
 					scheduleLL.addView(lessonLL);
 					nameTV.setTextColor(getResources().getColor(R.color.text));
 					lessonLL.setOnClickListener(new View.OnClickListener()
@@ -89,7 +106,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 						@Override
 						public void onClick(View v)
 						{
-							//ToDo: Call LessonViewActivity
+							//ToDo: Call AddTaskActivity
 						}
 					});
 					nameTV.setText(str.split(";")[0]);
@@ -123,14 +140,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 			catch (FileNotFoundException e)
 			{
 				TextView noSchTV = new TextView(ScheduleViewActivity.this);
-				try
-				{
-					scheduleLL.addView(noSchTV);
-				}
-				catch (Exception ex)
-				{
-					ex.printStackTrace();
-				}
+				scheduleLL.addView(noSchTV);
 				noSchTV.setText(R.string.noSchedule);
 				noSchTV.setTextColor(getResources().getColor(R.color.text));
 			}
