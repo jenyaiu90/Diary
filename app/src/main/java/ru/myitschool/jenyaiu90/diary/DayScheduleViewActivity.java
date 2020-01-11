@@ -46,6 +46,7 @@ public class DayScheduleViewActivity extends AppCompatActivity
 				lessonLL.addView(taskTV);
 				dayScheduleLL.addView(lessonLL);
 				nameTV.setTextColor(getResources().getColor(R.color.text));
+				nameTV.setTextSize(30);
 				lessonLL.setOnClickListener(new View.OnClickListener()
 				{
 					@Override
@@ -54,8 +55,8 @@ public class DayScheduleViewActivity extends AppCompatActivity
 						//ToDo: Call AddTaskActivity
 					}
 				});
-				nameTV.setText(str.split(";")[0]);
-				timeTV.setText(str.split(";")[1]);
+				nameTV.setText(str.split(";")[1]);
+				timeTV.setText(" (" + str.split(";")[2] + ")");
 				try
 				{
 					BufferedReader taskReader = new BufferedReader(new InputStreamReader(

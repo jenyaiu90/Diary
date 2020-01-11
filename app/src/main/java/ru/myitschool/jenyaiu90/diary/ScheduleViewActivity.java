@@ -101,6 +101,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 					lessonLL.addView(taskTV);
 					scheduleLL.addView(lessonLL);
 					nameTV.setTextColor(getResources().getColor(R.color.text));
+					nameTV.setTextSize(30);
 					lessonLL.setOnClickListener(new View.OnClickListener()
 					{
 						@Override
@@ -110,7 +111,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 						}
 					});
 					nameTV.setText(str.split(";")[1]);
-					timeTV.setText(str.split(";")[2]);
+					timeTV.setText(" (" + str.split(";")[2] + ")");
 					try
 					{
 						SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -161,6 +162,12 @@ public class ScheduleViewActivity extends AppCompatActivity
 		setDate((new Date()).getTime() / 86400000 * 86400000);
 		draw();
 	}
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		draw();
+	}
 	public void prevClick(View view)
 	{
 		setDate(date.getTime() - 86400000);
@@ -196,5 +203,6 @@ public class ScheduleViewActivity extends AppCompatActivity
 	{
 		Intent scheduleEditA = new Intent(ScheduleViewActivity.this, ScheduleEditActivity.class);
 		startActivity(scheduleEditA);
+		draw();
 	}
 }

@@ -1,6 +1,7 @@
 package ru.myitschool.jenyaiu90.diary;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -109,7 +110,7 @@ public class LessonEditActivity extends AppCompatActivity
 	}
 	public void cancel(View view)
 	{
-		this.finish();
+		finish();
 	}
 	public void save(View view)
 	{
@@ -144,40 +145,52 @@ public class LessonEditActivity extends AppCompatActivity
 				"schedule\\" + day + ".txt")));
 			BufferedWriter write = new BufferedWriter(new OutputStreamWriter(openFileOutput(
 				"schedule\\" + day + ".tmp", MODE_PRIVATE)));
-			String str= "";
+			String str = "";
 			int maxId = id;
 			if (id == -1)
 			{
 				while ((str = read.readLine()) != null)
 				{
-					if (id < Integer.parseInt(str.split(";")[0]))
+					if (maxId < Integer.parseInt(str.split(";")[0]))
 					{
-						id = Integer.parseInt(str.split(";")[0]);
+						maxId = Integer.parseInt(str.split(";")[0]);
 					}
 				}
 				read.close();
 				read = new BufferedReader(new InputStreamReader(openFileInput(
 					"schedule\\" + day + ".txt")));
+				id = maxId + 1;
 			}
+			boolean flag = false;
 			while ((str = read.readLine()) != null)
 			{
 				if (start[0] <  Integer.parseInt(str.split(";")[2].split(":")[0]) ||
 					start[0] == Integer.parseInt(str.split(";")[2].split(":")[0]) &&
 					start[1] <  Integer.parseInt(str.split(";")[2].split(":")[1].split("—")[0]))
 				{
-					write.write(id + ";" + name + ";" + start[0] + ":" + start[1] + "—" +
-						end[0] + ":" + end[1] + "\n");
+					write.write(id + ";" + name + ";" + (start[0] < 10 ? "0" : "") + start[0] +
+						":" + (start[1] < 10 ? "0" : "") + start[1] + "—" +
+						(end[0] < 10 ? "0" : "") + end[0] + ":" + (end[1] < 10 ? "0" : "") +
+						end[1] + "\n");
+					flag = true;
 				}
 				write.write(str + "\n");
 			}
+			if (!flag)
+			{
+				write.write(id + ";" + name + ";" + (start[0] < 10 ? "0" : "") + start[0] +
+					":" + (start[1] < 10 ? "0" : "") + start[1] + "—" +
+					(end[0] < 10 ? "0" : "") + end[0] + ":" + (end[1] < 10 ? "0" : "") +
+					end[1] + "\n");
+			}
 			read.close();
 			write.close();
-			if (!new File("schedule\\" + day + ".txt").delete())
+			if (!new File(getFilesDir(), "schedule\\" + day + ".txt").delete())
 			{
 				Toast.makeText(LessonEditActivity.this, R.string.error, Toast.LENGTH_LONG).show();
 			}
-			if (!new File("schedule\\" + day + ".tmp").renameTo(
-				new File("schedule\\" + day + ".txt")))
+			if (!new File(getFilesDir(), "schedule\\" + day + ".tmp").renameTo(
+				new File(getFilesDir(),"schedule\\" + day + ".txt")))
 			{
 				Toast.makeText(LessonEditActivity.this, R.string.error, Toast.LENGTH_LONG).show();
 			}
@@ -189,8 +202,10 @@ public class LessonEditActivity extends AppCompatActivity
 				new File(getFilesDir(), "schedule\\" + day + ".txt").createNewFile();
 				BufferedWriter write = new BufferedWriter(new OutputStreamWriter(openFileOutput(
 					"schedule\\" + day + ".txt", MODE_PRIVATE)));
-				write.write(0 + ";" + name + ";" + start[0] + ":" + start[1] + "—" +
-						end[0] + ":" + end[1] + "\n");
+				write.write(0 + ";" + name + ";" + (start[0] < 10 ? "0" : "") + start[0] +
+					":" + (start[1] < 10 ? "0" : "") + start[1] + "—" +
+					(end[0] < 10 ? "0" : "") + end[0] + ":" + (end[1] < 10 ? "0" : "") +
+					end[1] + "\n");
 				write.close();
 			}
 			catch (Exception ex)
@@ -202,7 +217,7 @@ public class LessonEditActivity extends AppCompatActivity
 		{
 			e.printStackTrace();
 		}
-		this.finish();
+		finish();
 	}
 	public void delete(@Nullable View view)
 	{
@@ -228,8 +243,8 @@ public class LessonEditActivity extends AppCompatActivity
 			e.printStackTrace();
 			return;
 		}
-		File old = new File("schedule\\" + day + ".txt");
-		File tmp = new File("schedule\\" + day + ".tmp");
+		File old = new File(getFilesDir(), "schedule\\" + day + ".txt");
+		File tmp = new File(getFilesDir(), "schedule\\" + day + ".tmp");
 		if (!old.delete())
 		{
 			Toast.makeText(LessonEditActivity.this, R.string.error, Toast.LENGTH_LONG).show();
@@ -240,7 +255,7 @@ public class LessonEditActivity extends AppCompatActivity
 		}
 		if (view != null)
 		{
-			this.finish();
+			finish();
 		}
 	}
 }

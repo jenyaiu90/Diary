@@ -38,10 +38,7 @@ public class ScheduleEditActivity extends AppCompatActivity
 					"schedule\\" + i + ".txt")));
 				String str = "";
 				int j = 0;
-				for (; schReader.readLine() != null; j++)
-				{
-
-				}
+				for (; schReader.readLine() != null; j++);
 				lessonLLs[i] = new LinearLayout[j];
 				schReader.close();
 				schReader = new BufferedReader(new InputStreamReader(openFileInput(
@@ -61,6 +58,7 @@ public class ScheduleEditActivity extends AppCompatActivity
 					scheduleEditLL.addView(lessonLL);
 					lessonLL.setBackgroundColor(getResources().getColor(R.color.lesson));
 					nameTV.setTextColor(getResources().getColor(R.color.text));
+					nameTV.setTextSize(30);
 					lessonLL.setOnClickListener(new View.OnClickListener()
 					{
 						@Override
@@ -73,11 +71,14 @@ public class ScheduleEditActivity extends AppCompatActivity
 							outer:
 							for (; i < 7; i++)
 							{
-								for (j = 0; j < lessonLLs[i].length; j++)
+								if (lessonLLs[i] != null)
 								{
-									if (lessonLLs[i][j] == v)
+									for (j = 0; j < lessonLLs[i].length; j++)
 									{
-										break outer;
+										if (lessonLLs[i][j] == v)
+										{
+											break outer;
+										}
 									}
 								}
 							}
@@ -94,10 +95,10 @@ public class ScheduleEditActivity extends AppCompatActivity
 								str = read.readLine();
 								lessonEditA.putExtra("id", Integer.parseInt(str.split(";")[0]));
 								lessonEditA.putExtra("name", str.split(";")[1]);
-								lessonEditA.putExtra("startH", str.split(";")[2].split(":")[0]);
-								lessonEditA.putExtra("startM", str.split(";")[2].split(":")[1].split("—")[0]);
-								lessonEditA.putExtra("endH", str.split("—")[1].split(":")[0]);
-								lessonEditA.putExtra("endM", str.split("—")[1].split(":")[1]);
+								lessonEditA.putExtra("startH", Integer.parseInt(str.split(";")[2].split(":")[0]));
+								lessonEditA.putExtra("startM", Integer.parseInt(str.split(";")[2].split(":")[1].split("—")[0]));
+								lessonEditA.putExtra("endH", Integer.parseInt(str.split("—")[1].split(":")[0]));
+								lessonEditA.putExtra("endM", Integer.parseInt(str.split("—")[1].split(":")[1]));
 								startActivity(lessonEditA);
 							}
 							catch (Exception e)
@@ -107,7 +108,7 @@ public class ScheduleEditActivity extends AppCompatActivity
 						}
 					});
 					nameTV.setText(str.split(";")[1]);
-					timeTV.setText(str.split(";")[2]);
+					timeTV.setText(" (" + str.split(";")[2] + ")");
 					TextView emptyTV = new TextView(ScheduleEditActivity.this);
 					emptyTV.setHeight(5);
 					scheduleEditLL.addView(emptyTV);
@@ -154,6 +155,12 @@ public class ScheduleEditActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule_edit);
 		scheduleEditLL = (LinearLayout)findViewById(R.id.scheduleEditLL);
+		draw();
+	}
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 		draw();
 	}
 }
