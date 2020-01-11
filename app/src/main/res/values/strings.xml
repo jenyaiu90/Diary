@@ -16,6 +16,20 @@
 	<!-- ScheduleEdit -->
 	<string name="add">Add new lesson</string>
 	
+	<!-- LessonEdit -->
+	<string name="lessonName">Lesson name</string>
+	<string name="setStartTime">Set lesson start time</string>
+	<string name="setEndTime">Set lesson end time</string>
+	<string name="none">None</string>
+	<string name="save">Save</string>
+	<string name="cancel">Cancel</string>
+	<string name="delete">Delete lesson</string>
+	
+	<string name="nameNotSet">You didn`t set lesson name</string>
+	<string name="startTimeNotSet">You didn`t set start time</string>
+	<string name="endTimeNotSet">You didn`t set end time</string>
+	<string name="invalidTime">Start time cannot be more then end time</string>
+	
 	<!-- general -->
 	<!-- ToDo: (Maybe) Remove aliases -->
 	<string name="monday">Monday</string>
@@ -25,6 +39,7 @@
 	<string name="friday">Friday</string>
 	<string name="saturday">Saturday</string>
 	<string name="sunday">Sunday</string>
+	<string name="error">Unknown error!</string>
 	<string-array name="days">
 		<item>@string/monday</item>
 		<item>@string/tuesday</item>
