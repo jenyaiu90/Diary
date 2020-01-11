@@ -186,7 +186,7 @@ public class LessonEditActivity extends AppCompatActivity
 		{
 			try
 			{
-				new File("schedule\\" + day + ".txt").createNewFile();
+				new File(getFilesDir(), "schedule\\" + day + ".txt").createNewFile();
 				BufferedWriter write = new BufferedWriter(new OutputStreamWriter(openFileOutput(
 					"schedule\\" + day + ".txt", MODE_PRIVATE)));
 				write.write(0 + ";" + name + ";" + start[0] + ":" + start[1] + "—" +
