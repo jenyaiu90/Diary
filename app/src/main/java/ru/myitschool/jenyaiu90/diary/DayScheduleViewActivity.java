@@ -30,6 +30,7 @@ public class DayScheduleViewActivity extends AppCompatActivity
 					"schedule\\" + day + ".txt")));
 			boolean f = true;
 			String str = "";
+			int j = 0;
 			while ((str = schReader.readLine()) != null)
 			{
 				f = false;
@@ -47,20 +48,12 @@ public class DayScheduleViewActivity extends AppCompatActivity
 				dayScheduleLL.addView(lessonLL);
 				nameTV.setTextColor(getResources().getColor(R.color.text));
 				nameTV.setTextSize(30);
-				lessonLL.setOnClickListener(new View.OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						//ToDo: Call AddTaskActivity
-					}
-				});
 				nameTV.setText(str.split(";")[1]);
 				timeTV.setText(" (" + str.split(";")[2] + ")");
 				try
 				{
 					BufferedReader taskReader = new BufferedReader(new InputStreamReader(
-							openFileInput("task\\" + sdf.format(day) + ".txt")));
+						openFileInput("task\\" + sdf.format(date) + "\\" + j + ".txt")));
 					str = taskReader.readLine();
 					taskTV.setText(str);
 					taskReader.close();
@@ -73,6 +66,7 @@ public class DayScheduleViewActivity extends AppCompatActivity
 				{
 					e.printStackTrace();
 				}
+				j++;
 			}
 			if (f)
 			{

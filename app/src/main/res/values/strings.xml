@@ -9,9 +9,10 @@
 	<!-- ScheduleView -->
 	<string name="prev">&lt;</string>
 	<string name="next">&gt;</string>
-	<string name="editSchedule">Edit Schedule</string>
+	<string name="editSchedule">Edit schedule</string>
 	<string name="noSchedule">There is no schedule for this day.</string>
 	<string name="noTask">There is no homework.</string>
+	<string name="editTask">Edit homework</string>
 	
 	<!-- ScheduleEdit -->
 	<string name="add">Add new lesson</string>
@@ -21,8 +22,6 @@
 	<string name="setStartTime">Set lesson start time</string>
 	<string name="setEndTime">Set lesson end time</string>
 	<string name="none">None</string>
-	<string name="save">Save</string>
-	<string name="cancel">Cancel</string>
 	<string name="delete">Delete lesson</string>
 	
 	<string name="nameNotSet">You didn`t set lesson name</string>
@@ -40,6 +39,8 @@
 	<string name="saturday">Saturday</string>
 	<string name="sunday">Sunday</string>
 	<string name="error">Unknown error!</string>
+	<string name="save">Save</string>
+	<string name="cancel">Cancel</string>
 	<string-array name="days">
 		<item>@string/monday</item>
 		<item>@string/tuesday</item>

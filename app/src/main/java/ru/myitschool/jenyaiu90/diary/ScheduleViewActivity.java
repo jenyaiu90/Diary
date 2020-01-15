@@ -1,7 +1,7 @@
 package ru.myitschool.jenyaiu90.diary;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,20 +11,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ScheduleViewActivity extends AppCompatActivity
 {
-	private LinearLayout scheduleLL;
+	private LinearLayout scheduleLL, lessonLLs[][];
 	private Button currentB;
 	private Date date, tmpDate;
-	private Button crutchButtons[];
+	private Button daysBs[];
 	private void setDate(long newDate)
 	{
 		date.setTime(newDate);
@@ -46,14 +48,15 @@ public class ScheduleViewActivity extends AppCompatActivity
 		tmpDate = new Date();
 		tmpDate.setTime(date.getTime());
 		String today = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
-		crutchButtons = new Button[7];
+		daysBs = new Button[7];
+		lessonLLs = new LinearLayout[7][];
 		for (int i = 0; i < 7; i++)
 		{
 			String tmpDateS = (new SimpleDateFormat("dd.MM.yyyy")).format(tmpDate);
-			crutchButtons[i] = new Button(ScheduleViewActivity.this);
-			scheduleLL.addView(crutchButtons[i]);
-			crutchButtons[i].setText(getResources().getStringArray(R.array.days)[i].toString() + " " + tmpDateS);
-			crutchButtons[i].setOnClickListener(new View.OnClickListener()
+			daysBs[i] = new Button(ScheduleViewActivity.this);
+			scheduleLL.addView(daysBs[i]);
+			daysBs[i].setText(getResources().getStringArray(R.array.days)[i].toString() + " " + tmpDateS);
+			daysBs[i].setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
@@ -65,7 +68,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 					for (int i = 6; i >= 0; i--)
 					{
 						tmp.setTime(tmp.getTime() - 86400000);
-						if (crutchButtons[i] == v)
+						if (daysBs[i] == v)
 						{
 							break;
 						}
@@ -76,7 +79,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 			});
 			if (tmpDateS.equals(today))
 			{
-				crutchButtons[i].setBackgroundColor(getResources().getColor(R.color.today));
+				daysBs[i].setBackgroundColor(getResources().getColor(R.color.today));
 			}
 			tmpDate.setTime(tmpDate.getTime() + 86400000);
 			try
@@ -85,6 +88,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 					"schedule\\" + i + ".txt")));
 				boolean f = true;
 				String str = "";
+				int j = 0;
 				while ((str = schReader.readLine()) != null)
 				{
 					f = false;
@@ -102,12 +106,53 @@ public class ScheduleViewActivity extends AppCompatActivity
 					scheduleLL.addView(lessonLL);
 					nameTV.setTextColor(getResources().getColor(R.color.text));
 					nameTV.setTextSize(30);
+					int tmpInt = lessonLLs[i] == null ? 0 : lessonLLs.length;
+					LinearLayout tmpLL[] = new LinearLayout[j + 1];
+					for (int k = 0; k < j; k++)
+					{
+						tmpLL[k] = lessonLLs[i][k];
+					}
+					tmpLL[j] = lessonLL;
+					lessonLLs[i] = tmpLL;
 					lessonLL.setOnClickListener(new View.OnClickListener()
 					{
 						@Override
 						public void onClick(View v)
 						{
-							//ToDo: Call AddTaskActivity
+							int i = 0, j = 0;
+							outer:
+							for ( ; i < 7; i++)
+							{
+								if (lessonLLs[i] != null)
+								{
+									for ( ; j < lessonLLs[i].length; j++)
+									{
+										if (lessonLLs[i][j] == v)
+										{
+											break outer;
+										}
+									}
+								}
+							}
+							SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+							Date tmp = new Date();
+							tmp.setTime(date.getTime() + 86400000 * i);
+							try
+							{
+								BufferedReader taskReader = new BufferedReader(new InputStreamReader(
+									openFileInput("task\\" + sdf.format(tmp) + "\\" + j + ".txt")));
+								String str = taskReader.readLine();
+								taskReader.close();
+								addTask(i, j, str);
+							}
+							catch (FileNotFoundException e)
+							{
+								addTask(i, j, "");
+							}
+							catch (Exception e)
+							{
+								e.printStackTrace();
+							}
 						}
 					});
 					nameTV.setText(str.split(";")[1]);
@@ -118,7 +163,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 						Date tmp = new Date();
 						tmp.setTime(date.getTime() + 86400000 * i);
 						BufferedReader taskReader = new BufferedReader(new InputStreamReader(
-							openFileInput("task\\" + sdf.format(tmp) + ".txt")));
+							openFileInput("task\\" + sdf.format(tmp) + "\\" + j + ".txt")));
 						str = taskReader.readLine();
 						taskTV.setText(str);
 						taskReader.close();
@@ -131,6 +176,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 					{
 						e.printStackTrace();
 					}
+					j++;
 				}
 				if (f)
 				{
@@ -203,6 +249,65 @@ public class ScheduleViewActivity extends AppCompatActivity
 	{
 		Intent scheduleEditA = new Intent(ScheduleViewActivity.this, ScheduleEditActivity.class);
 		startActivity(scheduleEditA);
+		draw();
+	}
+	private void addTask(int i, int j, String old)
+	{
+		Intent taskEditA = new Intent(ScheduleViewActivity.this, TaskEditActivity.class);
+		taskEditA.putExtra("task", old);
+		startActivityForResult(taskEditA, i + j * 10);
+	}
+	public void onActivityResult(int requestCode, int resultCode, Intent intent)
+	{
+		if (resultCode == RESULT_OK)
+		{
+			int i = requestCode % 10;
+			int j = requestCode / 10;
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+			Date tmp = new Date();
+			tmp.setTime(date.getTime() + 86400000 * i);
+			String str = intent.getStringExtra("res");
+			try
+			{
+				if (str == null)
+				{
+					throw new Exception("Something went wrong! (I was absolutely sure that str can`t be null)");
+				}
+				if (str.equals(""))
+				{
+					 new File(getFilesDir(), "task\\" + sdf.format(tmp) +
+							"\\" + j + ".txt").delete();
+				}
+				else
+				{
+					BufferedWriter taskWriter = new BufferedWriter(new OutputStreamWriter(
+						openFileOutput("task\\" + sdf.format(tmp) + "\\" + j + ".txt", MODE_PRIVATE)));
+					taskWriter.write(str);
+					taskWriter.close();
+				}
+			}
+			catch (FileNotFoundException e)
+			{
+				try
+				{
+					new File(getFilesDir(), "task\\" + sdf.format(tmp) +
+							"\\" + j + ".txt").createNewFile();
+					BufferedWriter taskWriter = new BufferedWriter(new OutputStreamWriter(
+							openFileOutput("task\\" + sdf.format(tmp) + "\\" +
+									j + ".txt", MODE_PRIVATE)));
+					taskWriter.write(str);
+					taskWriter.close();
+				}
+				catch (Exception ex)
+				{
+					ex.printStackTrace();
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 		draw();
 	}
 }

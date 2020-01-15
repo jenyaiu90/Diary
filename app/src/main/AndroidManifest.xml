@@ -20,6 +20,7 @@
 		<activity android:name=".ScheduleEditActivity"/>
 		<activity android:name=".DayScheduleViewActivity"/>
 		<activity android:name=".LessonEditActivity"/>
+		<activity android:name=".TaskEditActivity"/>
 	</application>
 
 </manifest>
