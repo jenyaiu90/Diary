@@ -4,27 +4,20 @@
 	android:layout_width="match_parent"
 	android:orientation="vertical">
 	<Button
-		android:id="@+id/scheduleB"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
-		android:text="@string/schedule"
-		android:onClick="scheduleClick"/>
+		android:text="@string/notesDate"
+		android:onClick="notesDate"/>
 	<Button
-		android:id="@+id/notesB"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
-		android:text="@string/notes"
-		android:onClick="notesClick"/>
-	<TextView
-		android:id="@+id/todayTV"
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:text="@string/todayNotes"/>
+		android:text="@string/addNote"
+		android:onClick="addNote"/>
 	<ScrollView
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="match_parent"
+		android:layout_width="match_parent">
 		<LinearLayout
-			android:id="@+id/notesLL"
+			android:id="@+id/notesListLL"
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
 			android:orientation="vertical"/>

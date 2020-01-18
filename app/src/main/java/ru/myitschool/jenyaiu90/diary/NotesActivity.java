@@ -1,41 +1,35 @@
 package ru.myitschool.jenyaiu90.diary;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Formatter;
 
-public class MainActivity extends AppCompatActivity
+public class NotesActivity extends AppCompatActivity
 {
-	private TextView todayTV;
-	private LinearLayout notesLL;
+	private LinearLayout notesListLL;
 	private Button noteBTs[];
 	private String names[];
 	private void draw()
 	{
-		notesLL.removeAllViews();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-		String date = dateFormat.format(new Date());
-		todayTV.setText(((new Formatter()).format(getResources().getText(R.string.todayNotes).toString(),
-				date)).toString());
+		notesListLL.removeAllViews();
 		try
 		{
 			BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(
-					"notes\\" + date + "\\notes.txt")));
+				"notes\\notes.txt")));
 			noteBTs = null;
 			int l = 0;
 			for (String i; (i = br.readLine()) != null; l++)
@@ -43,9 +37,9 @@ public class MainActivity extends AppCompatActivity
 				try
 				{
 					BufferedReader note = new BufferedReader(new InputStreamReader(openFileInput(
-							"notes\\" + date + "\\" + i + ".txt")));
-					Button noteBT = new Button(MainActivity.this);
-					notesLL.addView(noteBT);
+							"notes\\" + i + ".txt")));
+					Button noteBT = new Button(NotesActivity.this);
+					notesListLL.addView(noteBT);
 					noteBT.setTextSize(15);
 					String buff, t = "";
 					int j = 0;
@@ -100,8 +94,9 @@ public class MainActivity extends AppCompatActivity
 									break;
 								}
 							}
-							Intent noteViewA = new Intent(MainActivity.this, NoteViewActivity.class);
-							noteViewA.putExtra("date", new Date());
+							Intent noteViewA = new Intent(NotesActivity.this, NoteViewActivity.class);
+							Date date = null;
+							noteViewA.putExtra("date", date);
 							noteViewA.putExtra("name", names[i]);
 							startActivityForResult(noteViewA, 1);
 						}
@@ -115,11 +110,18 @@ public class MainActivity extends AppCompatActivity
 		}
 		catch (FileNotFoundException e)
 		{
-			TextView noNoteTV = new TextView(MainActivity.this);
-			notesLL.addView(noNoteTV, 0);
-			noNoteTV.setText(R.string.noNotes);
-			noNoteTV.setTextColor(getResources().getColor(R.color.text));
-			noNoteTV.setTextSize(20);
+			try
+			{
+				TextView noNoteTV = new TextView(NotesActivity.this);
+				notesListLL.addView(noNoteTV, 0);
+				noNoteTV.setText(R.string.noNotes);
+				noNoteTV.setTextColor(getResources().getColor(R.color.text));
+				noNoteTV.setTextSize(20);
+			}
+			catch (Exception ex)
+			{
+				ex.printStackTrace();
+			}
 		}
 		catch (Exception e)
 		{
@@ -127,24 +129,45 @@ public class MainActivity extends AppCompatActivity
 		}
 	}
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		todayTV = (TextView)findViewById(R.id.todayTV);
-		notesLL = (LinearLayout)findViewById(R.id.notesLL);
+		setContentView(R.layout.activity_notes);
+		notesListLL = (LinearLayout)findViewById(R.id.notesListLL);
 		draw();
+		setResult(1);
 	}
-	public void scheduleClick(View view)
+	public void notesDate(View view)
 	{
-		Intent scheduleViewA = new Intent(MainActivity.this, ScheduleViewActivity.class);
-		startActivity(scheduleViewA);
+		SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
+		SimpleDateFormat sdfMonth = new SimpleDateFormat("M");
+		SimpleDateFormat sdfDay = new SimpleDateFormat("d");
+		new DatePickerDialog(
+				NotesActivity.this,
+				new DatePickerDialog.OnDateSetListener()
+				{
+					@Override
+					public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
+					{
+						Date tmp = new Date(year - 1900, month, dayOfMonth);
+						callNotesDateA(tmp);
+					}
+				},
+				Integer.parseInt(sdfYear.format(new Date())),
+				Integer.parseInt(sdfMonth.format(new Date())) - 1,
+				Integer.parseInt(sdfDay.format(new Date()))).show();
 	}
-	public void notesClick(View view)
+	public void callNotesDateA(Date date)
 	{
-		Intent notesA = new Intent(MainActivity.this, NotesActivity.class);
-		startActivityForResult(notesA, 1);
-		draw();
+		Intent notesDateA = new Intent(NotesActivity.this, NotesDateActivity.class);
+		notesDateA.putExtra("date", date);
+		startActivityForResult(notesDateA, 1);
+	}
+	public void addNote(View view)
+	{
+		Intent noteEditA = new Intent(NotesActivity.this, NoteEditActivity.class);
+		noteEditA.putExtra("new", true);
+		startActivityForResult(noteEditA, 1);
 	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent)

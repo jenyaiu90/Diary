@@ -1,0 +1,68 @@
+<resources>
+	<!-- Main-->
+	<string name="app_name">Дневник</string>
+	<string name="schedule">Расписание</string>
+	<string name="notes">Заметки</string>
+	<string name="todayNotes">Заметки на %1$s:</string>
+	<string name="noNotes">Заметки отсутствуют.</string>
+	
+	<!-- ScheduleView -->
+	<string name="prev">&lt;</string>
+	<string name="next">&gt;</string>
+	<string name="editSchedule">Редактировать расписание</string>
+	<string name="noSchedule">На этот день нет расписания.</string>
+	<string name="noTask">Нет домашнего задания.</string>
+	<string name="editTask">Редактировать домашнее задание</string>
+	
+	<!-- ScheduleEdit -->
+	<string name="add">Добавить урок</string>
+	
+	<!-- LessonEdit -->
+	<string name="lessonName">Название урока</string>
+	<string name="setStartTime">Установить время начала</string>
+	<string name="setEndTime">Установить время окончания</string>
+	<string name="none">Нет</string>
+	<string name="deleteLesson">Удалить урок</string>
+	
+	<string name="nameNotSet">Вы не добавили название урока</string>
+	<string name="startTimeNotSet">Вы не добавили время начала урока</string>
+	<string name="endTimeNotSet">Вы не добавили время окончания урока</string>
+	<string name="invalidTime">Начало не может быть позже конца</string>
+	
+	<!-- notes -->
+	<string name="notesDate">Показать заметки для определённой даты</string>
+	<string name="addNote">Добавить заметку</string>
+	
+	<!-- noteView -->
+	<string name="editNote">Редактировать заметку</string>
+	
+	<!-- noteEdit -->
+	<string name="title">Заголовок</string>
+	<string name="deleteNote">Удалить заметку</string>
+	<string name="setDate">Установить дату</string>
+	<string name="nameNotNotes">Заголовок не может быть "notes"</string>
+	<string name="nameExists">Заметка с таким заголовком уже существует</string>
+	<string name="noName">Вы не добавили заголовок заметки</string>
+	<string name="empty">Заметка пуста</string>
+	
+	<!-- general -->
+	<string name="monday">Понедельник</string>
+	<string name="tuesday">Вторник</string>
+	<string name="wednesday">Среда</string>
+	<string name="thursday">Четверг</string>
+	<string name="friday">Пятница</string>
+	<string name="saturday">Суббота</string>
+	<string name="sunday">Воскресенье</string>
+	<string name="error">Неизвестная ошибка!</string>
+	<string name="save">Сохранить</string>
+	<string name="cancel">Отменить</string>
+	<string-array name="days">
+		<item>@string/monday</item>
+		<item>@string/tuesday</item>
+		<item>@string/wednesday</item>
+		<item>@string/thursday</item>
+		<item>@string/friday</item>
+		<item>@string/saturday</item>
+		<item>@string/sunday</item>
+	</string-array>
+</resources>

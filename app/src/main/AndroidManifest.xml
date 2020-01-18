@@ -16,6 +16,15 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+		<activity android:name=".ScheduleViewActivity"/>
+		<activity android:name=".ScheduleEditActivity"/>
+		<activity android:name=".DayScheduleViewActivity"/>
+		<activity android:name=".LessonEditActivity"/>
+		<activity android:name=".TaskEditActivity"/>
+		<activity android:name=".NotesActivity"/>
+		<activity android:name=".NotesDateActivity"/>
+		<activity android:name=".NoteViewActivity"/>
+		<activity android:name=".NoteEditActivity"/>
 	</application>
 
 </manifest>

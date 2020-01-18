@@ -1,3 +1,69 @@
 <resources>
+	<!-- Main-->
 	<string name="app_name">Diary</string>
+	<string name="schedule">Schedule</string>
+	<string name="notes">Notes</string>
+	<string name="todayNotes">Notes for %1$s:</string>
+	<string name="noNotes">There are no notes.</string>
+	
+	<!-- ScheduleView -->
+	<string name="prev">&lt;</string>
+	<string name="next">&gt;</string>
+	<string name="editSchedule">Edit schedule</string>
+	<string name="noSchedule">There is no schedule for this day.</string>
+	<string name="noTask">There is no homework.</string>
+	<string name="editTask">Edit homework</string>
+	
+	<!-- ScheduleEdit -->
+	<string name="add">Add new lesson</string>
+	
+	<!-- LessonEdit -->
+	<string name="lessonName">Lesson name</string>
+	<string name="setStartTime">Set lesson start time</string>
+	<string name="setEndTime">Set lesson end time</string>
+	<string name="none">None</string>
+	<string name="deleteLesson">Delete lesson</string>
+	
+	<string name="nameNotSet">You didn`t set lesson name</string>
+	<string name="startTimeNotSet">You didn`t set start time</string>
+	<string name="endTimeNotSet">You didn`t set end time</string>
+	<string name="invalidTime">Start time cannot be more then end time</string>
+	
+	<!-- notes -->
+	<string name="notesDate">Show notes for date</string>
+	<string name="addNote">Add note</string>
+	
+	<!-- noteView -->
+	<string name="editNote">Edit note</string>
+	
+	<!-- noteEdit -->
+	<string name="title">Title</string>
+	<string name="deleteNote">Delete note</string>
+	<string name="setDate">Set date</string>
+	<string name="nameNotNotes">Title can`t be "notes"</string>
+	<string name="nameExists">Note with that name has already been created</string>
+	<string name="noName">You didn`t add note`s name</string>
+	<string name="empty">Note is empty</string>
+	
+	<!-- general -->
+	<!-- ToDo: (Maybe) Remove aliases -->
+	<string name="monday">Monday</string>
+	<string name="tuesday">Tuesday</string>
+	<string name="wednesday">Wednesday</string>
+	<string name="thursday">Thursday</string>
+	<string name="friday">Friday</string>
+	<string name="saturday">Saturday</string>
+	<string name="sunday">Sunday</string>
+	<string name="error">Unknown error!</string>
+	<string name="save">Save</string>
+	<string name="cancel">Cancel</string>
+	<string-array name="days">
+		<item>@string/monday</item>
+		<item>@string/tuesday</item>
+		<item>@string/wednesday</item>
+		<item>@string/thursday</item>
+		<item>@string/friday</item>
+		<item>@string/saturday</item>
+		<item>@string/sunday</item>
+	</string-array>
 </resources>
