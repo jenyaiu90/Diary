@@ -15,10 +15,10 @@ import java.util.Date;
 
 public class DayScheduleViewActivity extends AppCompatActivity
 {
-	Date date;
-	int day;
-	TextView titleTV;
-	LinearLayout dayScheduleLL;
+	private Date date;
+	private int day;
+	private TextView titleTV;
+	private LinearLayout dayScheduleLL;
 	private void draw()
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");

@@ -1,16 +1,13 @@
 package ru.myitschool.jenyaiu90.diary;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,23 +16,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
 
-public class MainActivity extends AppCompatActivity
+public class NotesDateActivity extends AppCompatActivity
 {
-	private TextView todayTV;
-	private LinearLayout notesLL;
+	private TextView dateTV;
+	private LinearLayout notesDateLL;
+	private Date date;
 	private Button noteBTs[];
 	private String names[];
 	private void draw()
 	{
-		notesLL.removeAllViews();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-		String date = dateFormat.format(new Date());
-		todayTV.setText(((new Formatter()).format(getResources().getText(R.string.todayNotes).toString(),
-				date)).toString());
+		String dateStr = new SimpleDateFormat("dd.MM.yyyy").format(date);
 		try
 		{
 			BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(
-					"notes\\" + date + "\\notes.txt")));
+					"notes\\" + dateStr + "\\notes.txt")));
 			noteBTs = null;
 			int l = 0;
 			for (String i; (i = br.readLine()) != null; l++)
@@ -43,9 +37,9 @@ public class MainActivity extends AppCompatActivity
 				try
 				{
 					BufferedReader note = new BufferedReader(new InputStreamReader(openFileInput(
-							"notes\\" + date + "\\" + i + ".txt")));
-					Button noteBT = new Button(MainActivity.this);
-					notesLL.addView(noteBT);
+							"notes\\" + dateStr + "\\" + i + ".txt")));
+					Button noteBT = new Button(NotesDateActivity.this);
+					notesDateLL.addView(noteBT);
 					noteBT.setTextSize(15);
 					String buff, t = "";
 					int j = 0;
@@ -100,8 +94,8 @@ public class MainActivity extends AppCompatActivity
 									break;
 								}
 							}
-							Intent noteViewA = new Intent(MainActivity.this, NoteViewActivity.class);
-							noteViewA.putExtra("date", new Date());
+							Intent noteViewA = new Intent(NotesDateActivity.this, NoteViewActivity.class);
+							noteViewA.putExtra("date", date);
 							noteViewA.putExtra("name", names[i]);
 							startActivityForResult(noteViewA, 1);
 						}
@@ -115,8 +109,8 @@ public class MainActivity extends AppCompatActivity
 		}
 		catch (FileNotFoundException e)
 		{
-			TextView noNoteTV = new TextView(MainActivity.this);
-			notesLL.addView(noNoteTV, 0);
+			TextView noNoteTV = new TextView(NotesDateActivity.this);
+			notesDateLL.addView(noNoteTV, 0);
 			noNoteTV.setText(R.string.noNotes);
 			noNoteTV.setTextColor(getResources().getColor(R.color.text));
 			noNoteTV.setTextSize(20);
@@ -130,21 +124,15 @@ public class MainActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		todayTV = (TextView)findViewById(R.id.todayTV);
-		notesLL = (LinearLayout)findViewById(R.id.notesLL);
+		setContentView(R.layout.activity_notes_date);
+		date = (Date)getIntent().getSerializableExtra("date");
+		dateTV = (TextView)findViewById(R.id.dateTV);
+		dateTV.setText(((new Formatter()).format(getResources().getText(
+			R.string.todayNotes).toString(), new SimpleDateFormat("dd.MM.yyyy").format(
+			date))).toString());
+		notesDateLL = (LinearLayout)findViewById(R.id.notesDateLL);
 		draw();
-	}
-	public void scheduleClick(View view)
-	{
-		Intent scheduleViewA = new Intent(MainActivity.this, ScheduleViewActivity.class);
-		startActivity(scheduleViewA);
-	}
-	public void notesClick(View view)
-	{
-		Intent notesA = new Intent(MainActivity.this, NotesActivity.class);
-		startActivityForResult(notesA, 1);
-		draw();
+		setResult(1);
 	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent)

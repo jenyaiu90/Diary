@@ -1,7 +1,6 @@
 package ru.myitschool.jenyaiu90.diary;
 
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,13 +22,13 @@ import java.io.OutputStreamWriter;
 
 public class LessonEditActivity extends AppCompatActivity
 {
-	String name;
-	int start[], end[];
-	int day;
-	int id;
-	EditText nameET;
-	TextView startTimeTV, endTimeTV;
-	LinearLayout lessonEditLL;
+	private String name;
+	private int start[], end[];
+	private int day;
+	private int id;
+	private EditText nameET;
+	private TextView startTimeTV, endTimeTV;
+	private LinearLayout lessonEditLL;
 	private void setText()
 	{
 		startTimeTV.setText((start[0] < 10 ? "0" : "") + start[0] + ":" +
@@ -61,7 +60,7 @@ public class LessonEditActivity extends AppCompatActivity
 			setText();
 			Button deleteB = new Button(LessonEditActivity.this);
 			lessonEditLL.addView(deleteB);
-			deleteB.setText(R.string.delete);
+			deleteB.setText(R.string.deleteLesson);
 			deleteB.setOnClickListener(new View.OnClickListener()
 			{
 				@Override

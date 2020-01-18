@@ -257,6 +257,7 @@ public class ScheduleViewActivity extends AppCompatActivity
 		taskEditA.putExtra("task", old);
 		startActivityForResult(taskEditA, i + j * 10);
 	}
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
 		if (resultCode == RESULT_OK)

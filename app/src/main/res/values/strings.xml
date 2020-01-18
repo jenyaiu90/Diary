@@ -22,12 +22,28 @@
 	<string name="setStartTime">Set lesson start time</string>
 	<string name="setEndTime">Set lesson end time</string>
 	<string name="none">None</string>
-	<string name="delete">Delete lesson</string>
+	<string name="deleteLesson">Delete lesson</string>
 	
 	<string name="nameNotSet">You didn`t set lesson name</string>
 	<string name="startTimeNotSet">You didn`t set start time</string>
 	<string name="endTimeNotSet">You didn`t set end time</string>
 	<string name="invalidTime">Start time cannot be more then end time</string>
+	
+	<!-- notes -->
+	<string name="notesDate">Show notes for date</string>
+	<string name="addNote">Add note</string>
+	
+	<!-- noteView -->
+	<string name="editNote">Edit note</string>
+	
+	<!-- noteEdit -->
+	<string name="title">Title</string>
+	<string name="deleteNote">Delete note</string>
+	<string name="setDate">Set date</string>
+	<string name="nameNotNotes">Title can`t be "notes"</string>
+	<string name="nameExists">Note with that name has already been created</string>
+	<string name="noName">You didn`t add note`s name</string>
+	<string name="empty">Note is empty</string>
 	
 	<!-- general -->
 	<!-- ToDo: (Maybe) Remove aliases -->

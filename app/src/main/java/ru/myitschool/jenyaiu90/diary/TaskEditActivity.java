@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class TaskEditActivity extends AppCompatActivity
 {
-	EditText taskET;
+	private EditText taskET;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{

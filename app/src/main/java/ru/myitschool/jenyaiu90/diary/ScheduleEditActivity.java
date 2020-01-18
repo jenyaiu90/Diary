@@ -17,9 +17,9 @@ import java.io.InputStreamReader;
 
 public class ScheduleEditActivity extends AppCompatActivity
 {
-	LinearLayout scheduleEditLL;
-	Button addLessonBs[];
-	LinearLayout lessonLLs[][];
+	private LinearLayout scheduleEditLL;
+	private Button addLessonBs[];
+	private LinearLayout lessonLLs[][];
 	private void draw()
 	{
 		scheduleEditLL.removeAllViews();

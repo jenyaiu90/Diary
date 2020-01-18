@@ -21,6 +21,10 @@
 		<activity android:name=".DayScheduleViewActivity"/>
 		<activity android:name=".LessonEditActivity"/>
 		<activity android:name=".TaskEditActivity"/>
+		<activity android:name=".NotesActivity"/>
+		<activity android:name=".NotesDateActivity"/>
+		<activity android:name=".NoteViewActivity"/>
+		<activity android:name=".NoteEditActivity"/>
 	</application>
 
 </manifest>
